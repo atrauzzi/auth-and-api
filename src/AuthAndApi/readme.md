@@ -1,4 +1,4 @@
-﻿# Data Source
+﻿# Auth and API
 
 This library encapsulates the idea of your project accessing other systems via 
 the wide assorment of auth standards and APIs.

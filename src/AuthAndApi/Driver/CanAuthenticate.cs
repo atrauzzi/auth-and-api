@@ -1,9 +1,6 @@
-﻿using AuthAndApi;
+﻿namespace AuthAndApi.Driver {
 
-
-namespace Bitmoss.DataSource.Driver {
-
-    interface CanAuthenticate {
+    public interface CanAuthenticate {
 
         Owner FindOrCreateOwner(object data);
 

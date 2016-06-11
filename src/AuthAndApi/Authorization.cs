@@ -5,33 +5,27 @@ namespace AuthAndApi {
 
     public class Authorization {
 
-        public int DriverId { get; }
+        public int DriverId { get; set; }
 
-        public Owner Owner { get; }
+        public Owner Owner { get; set; }
 
-        public string Token { get; }
+        public string Token { get; set; }
 
-        public string Secret { get; }
+        public string Secret { get; set; }
 
-        public string NativeId { get; }
+        public string NativeId { get; set; }
 
-        public string RefreshToken { get; }
+        public string RefreshToken { get; set; }
 
-        public ZonedDateTime LastRefreshed { get; }
+        public ZonedDateTime LastRefreshed { get; set; }
 
-        public ZonedDateTime Expires { get; }
+        public ZonedDateTime Expires { get; set; }
 
-        public ZonedDateTime LastChecked { get; }
+        public ZonedDateTime LastChecked { get; set; }
 
-        public ZonedDateTime Created { get; }
+        public ZonedDateTime Created { get; set; }
 
-        //
-
-        public bool Stale {
-            get {
-                return LastChecked.ToDateTimeUtc().CompareTo(SystemClock.Instance.GetCurrentInstant().ToDateTimeUtc()) < 0;
-            }
-        }
+        public bool Expired => LastChecked.ToDateTimeUtc().CompareTo(SystemClock.Instance.GetCurrentInstant().ToDateTimeUtc()) < 0;
 
     }
 

@@ -1,9 +1,6 @@
-﻿using AuthAndApi;
+﻿namespace AuthAndApi.Driver {
 
-
-namespace AuthAndApi.Driver {
-
-    interface Contract {
+    public interface Contract {
 
         void Associate(Owner dataSourceOwner, object data);
 

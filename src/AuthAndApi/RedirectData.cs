@@ -1,20 +1,22 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 
+// This DTO represents information useful to an implementing project's HTTP controller layer.
 namespace AuthAndApi {
 
     public class RedirectData {
 
-        public Uri RedirectUri { get; }
+        public Uri Uri { get; }
 
         public IDictionary<string, string> State { get; }
 
-        public RedirectData(Uri redirectUri, IDictionary<string, string> state) {
-            RedirectUri = redirectUri;
+        public string StateKey { get; }
+
+        public RedirectData(Uri uri, IDictionary<string, string> state, string stateKey = null) {
+            Uri = uri;
             State = state;
+            StateKey = stateKey;
         }
 
     }

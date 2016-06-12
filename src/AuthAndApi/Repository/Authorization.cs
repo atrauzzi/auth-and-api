@@ -8,7 +8,7 @@ namespace AuthAndApi.Repository {
 
         IEnumerable<AuthorizationEntity> GetForOwner(Owner owner);
 
-        IEnumerable<AuthorizationEntity> UpdateOrCreate();
+        void UpdateOrCreate();
 
     }
 

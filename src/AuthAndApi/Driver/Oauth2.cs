@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Security.Cryptography;
-using RestSharp;
+using Oauth2Configuration = AuthAndApi.Driver.Configuration.Oauth2;
+using RestSharp.Portable;
+using RestSharp.Portable.HttpClient;
 using AuthorizationRepository = AuthAndApi.Repository.Authorization;
 
 
@@ -9,62 +11,40 @@ namespace AuthAndApi.Driver {
 
     public class Oauth2 : Contract {
 
+        protected Oauth2Configuration Configuration { get; }
+
         protected AuthorizationRepository AuthorizationRepository { get; }
 
-        public string Name { get; }
+        public string Name => Configuration.Name;
 
-        public Uri BaseAuthorizationUri { get; }
-
-        public Uri BaseRenewalUri { get; }
-
-        public string ClientId { get; }
-
-        protected string ClientSecret { get; }
-
-        public string ScopeSeparator { get; }
-
-        public ISet<string> Scopes { get; }
-
-        public Oauth2(
-            AuthorizationRepository authorizationRepository,
-            string name,
-            Uri baseAuthorizationUri,
-            Uri baseRenewalUri,
-            string clientId,
-            string clientSecret,
-            string scopeSeparator = " ",
-            ISet<string> scopes = null
-            ) {
-
+        public Oauth2(Oauth2Configuration configuration, AuthorizationRepository authorizationRepository) {
+            Configuration = configuration;
             AuthorizationRepository = authorizationRepository;
-            Name = name;
-            BaseAuthorizationUri = baseAuthorizationUri;
-            BaseRenewalUri = baseRenewalUri;
-            ClientId = clientId;
-            ClientSecret = clientSecret;
-            ScopeSeparator = scopeSeparator;
-
-            if(scopes == null)
-                Scopes = new HashSet<string>();
-
         }
 
-        // I have state, generate a key for me.
-        public Uri GetAuthorizationUri(IDictionary<string, string> state, out string stateKey) {
+        // Generate a key for me.
+        public Uri GetAuthorizationUri(out string stateKey, Uri returnUri = null) {
             stateKey = CreateStateKey();
-            return GetAuthorizationUri(state, stateKey);
+            return GetAuthorizationUri(stateKey, returnUri);
         }
 
-        // I have state and a key for it.
-        public Uri GetAuthorizationUri(IDictionary<string, string> state, string stateKey) {
+        // I already have a state key.
+        public Uri GetAuthorizationUri(string stateKey, Uri returnUri = null) {
             var request = CreateRestRequest();
             request.AddQueryParameter("state", stateKey);
+            request.AddQueryParameter("redirect_uri", returnUri?.ToString());
             return BuildUri(request);
         }
+
+        //
+        //
 
         public void Associate(Owner dataSourceOwner, object data) {
             throw new NotImplementedException();
         }
+
+        //
+        //
 
         public void CreateAuthenticatedRequest(string uri, Authorization authorization, string method = "GET") {
             throw new NotImplementedException();
@@ -78,7 +58,7 @@ namespace AuthAndApi.Driver {
         //
 
         protected Uri BuildUri(RestRequest request) {
-            return new RestClient(BaseAuthorizationUri).BuildUri(request);
+            return new RestClient(Configuration.BaseAuthorizationUri).BuildUri(request);
         }
 
         // Creates the base request.
@@ -86,13 +66,12 @@ namespace AuthAndApi.Driver {
 
             var request = new RestRequest();
 
-            request.AddQueryParameter("client_id", ClientId);
+            request.AddQueryParameter("client_id", Configuration.ClientId);
             request.AddQueryParameter("response_type", "code");
             request.AddQueryParameter("approval_prompt", "auto");
-            //request.AddQueryParameter("redirect_uri", "");
 
-            if (Scopes.Count > 0)
-                request.AddQueryParameter("scope", string.Join(ScopeSeparator, Scopes));
+            if(Configuration.Scopes.Count > 0)
+                request.AddQueryParameter("scope", string.Join(Configuration.ScopeSeparator, Configuration.Scopes));
 
             return request;
 
@@ -102,7 +81,7 @@ namespace AuthAndApi.Driver {
 
             var tokenData = new byte[length];
 
-            using (RandomNumberGenerator rng = new RNGCryptoServiceProvider()) {
+            using(RandomNumberGenerator rng = new RNGCryptoServiceProvider()) {
                 rng.GetBytes(tokenData);
             }
 

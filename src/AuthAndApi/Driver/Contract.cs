@@ -8,9 +8,9 @@ namespace AuthAndApi.Driver {
 
         string Name { get; }
 
-        Uri GetAuthorizationUri(IDictionary<string, string> state, out string stateKey);
+        Uri GetAuthorizationUri(out string stateKey, Uri returnUri = null);
 
-        Uri GetAuthorizationUri(IDictionary<string, string> state, string stateKey);
+        Uri GetAuthorizationUri(string stateKey, Uri returnUri = null);
 
         void Associate(Owner dataSourceOwner, object data);
 

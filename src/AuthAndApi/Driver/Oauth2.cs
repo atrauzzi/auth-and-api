@@ -1,10 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Security.Cryptography;
 using Oauth2Configuration = AuthAndApi.Driver.Configuration.Oauth2;
 using RestSharp.Portable;
 using RestSharp.Portable.HttpClient;
-using AuthorizationRepository = AuthAndApi.Repository.Authorization;
 
 
 namespace AuthAndApi.Driver {
@@ -13,11 +11,14 @@ namespace AuthAndApi.Driver {
 
         protected Oauth2Configuration Configuration { get; }
 
-        protected AuthorizationRepository AuthorizationRepository { get; }
+        protected Repository.Authorization AuthorizationRepository { get; }
 
         public string Name => Configuration.Name;
 
-        public Oauth2(Oauth2Configuration configuration, AuthorizationRepository authorizationRepository) {
+        public Oauth2(
+            Oauth2Configuration configuration, 
+            Repository.Authorization authorizationRepository
+        ) {
             Configuration = configuration;
             AuthorizationRepository = authorizationRepository;
         }
@@ -39,18 +40,18 @@ namespace AuthAndApi.Driver {
         //
         //
 
-        public void Associate(Owner dataSourceOwner, object data) {
+        public void Associate(AuthAndApi.Owner dataSourceOwner, object data) {
             throw new NotImplementedException();
         }
 
         //
         //
 
-        public void CreateAuthenticatedRequest(string uri, Authorization authorization, string method = "GET") {
+        public void CreateAuthenticatedRequest(string uri, AuthorizationContract authorization, string method = "GET") {
             throw new NotImplementedException();
         }
 
-        public void GetAuthenticatedResponse(string uri, Authorization authorization, string method = "GET") {
+        public void GetAuthenticatedResponse(string uri, AuthorizationContract authorization, string method = "GET") {
             throw new NotImplementedException();
         }
 

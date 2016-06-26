@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using DriverContract = AuthAndApi.Driver.Contract;
 
 
 namespace AuthAndApi {
@@ -12,13 +11,13 @@ namespace AuthAndApi {
         // Food for thought: https://codetype.wordpress.com/2012/06/18/using-structuremap-to-collect-and-use-all-instances-of-a-given-type/
         // Reminder: https://twitter.com/jeremydmiller/status/741754579092545536
         // ToDo: Make immutable!
-        public IDictionary<string, DriverContract> Drivers { get; protected set; }
+        public IDictionary<string, Driver.Contract> Drivers { get; protected set; }
 
-        public Service(IDictionary<string, DriverContract> drivers) {
+        public Service(IDictionary<string, Driver.Contract> drivers) {
             Drivers = drivers;
         }
 
-        public State Start(DriverContract driver, Uri returnUri = null) {
+        public State Start(Driver.Contract driver, Uri returnUri = null) {
 
             Uri authorizationUri = null;
             string stateKey = null;
@@ -31,7 +30,7 @@ namespace AuthAndApi {
 
         public State Start(string service, Uri returnUri = null) {
 
-            DriverContract driver = null;
+            Driver.Contract driver = null;
 
             if(!Drivers.TryGetValue(service, out driver))
                 throw new UnsupportedServiceException(service);

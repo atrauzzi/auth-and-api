@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 
 
 namespace AuthAndApi.Driver {
@@ -14,9 +13,9 @@ namespace AuthAndApi.Driver {
 
         void Associate(Owner dataSourceOwner, object data);
 
-        void CreateAuthenticatedRequest(string uri, Authorization authorization, string method = "GET");
+        void CreateAuthenticatedRequest(string uri, AuthorizationContract authorization, string method = "GET");
 
-        void GetAuthenticatedResponse(string uri, Authorization authorization, string method = "GET");
+        void GetAuthenticatedResponse(string uri, AuthorizationContract authorization, string method = "GET");
 
     }
 

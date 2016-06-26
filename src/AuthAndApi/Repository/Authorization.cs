@@ -1,14 +1,13 @@
 ﻿using System.Collections.Generic;
-using AuthorizationEntity = AuthAndApi.Authorization;
 
 
 namespace AuthAndApi.Repository {
 
     public interface Authorization {
 
-        IEnumerable<AuthorizationEntity> GetForOwner(Owner owner);
+        IEnumerable<AuthAndApi.AuthorizationContract> GetForOwner(AuthAndApi.Owner owner);
 
-        void UpdateOrCreate(AuthorizationEntity authorization);
+        void UpdateOrCreate(AuthAndApi.AuthorizationContract authorization);
 
     }
 

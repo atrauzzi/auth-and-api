@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using AuthAndApi.Driver;
 
 
 namespace AuthAndApi {
@@ -17,27 +18,38 @@ namespace AuthAndApi {
             Drivers = drivers;
         }
 
-        public State Start(Driver.Contract driver, Uri returnUri = null) {
+        //
+        //
 
-            Uri authorizationUri = null;
-            string stateKey = null;
-
-            authorizationUri = driver.GetAuthorizationUri(out stateKey, returnUri);
-            
-            return new State(driver.Name, authorizationUri, stateKey);
-
-        }
-
-        public State Start(string service, Uri returnUri = null) {
+        public Driver.Contract GetDriver(string service) {
 
             Driver.Contract driver = null;
 
-            if(!Drivers.TryGetValue(service, out driver))
+            if (!Drivers.TryGetValue(service, out driver))
                 throw new UnsupportedServiceException(service);
 
-            return Start(driver, returnUri);
+            return driver;
 
         }
+
+        /*
+        public void Associate(Owner owner, State state, object data) {
+            GetDriver(state.Driver).Associate(owner, state, data);
+        }
+
+        public bool CanAuthenticate(State state, object data) {
+            return GetDriver(state.Driver) is CanAuthenticate;
+        }
+        */
+
+        //
+        //
+
+        /*
+        public ResourceOwner GetResourceOwner(State state, object data) {
+            return GetDriver(state.Driver).GetResourceOwner(state, data);
+        }
+        */
 
     }
 

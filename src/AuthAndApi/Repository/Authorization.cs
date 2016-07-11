@@ -5,9 +5,9 @@ namespace AuthAndApi.Repository {
 
     public interface Authorization {
 
-        IEnumerable<AuthAndApi.AuthorizationContract> GetForOwner(AuthAndApi.Owner owner);
+        IEnumerable<AuthAndApi.Authorization> GetForOwner(AuthAndApi.Owner owner);
 
-        void UpdateOrCreate(AuthAndApi.AuthorizationContract authorization);
+        void UpdateOrCreate(AuthAndApi.Authorization authorization);
 
     }
 

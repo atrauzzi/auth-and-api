@@ -1,21 +1,11 @@
-﻿using System;
-using NodaTime;
+﻿using NodaTime;
 
 
 namespace AuthAndApi {
 
-    public class Authorization<OwnerType> : GenericAuthorizationContract<OwnerType> where OwnerType : AuthAndApi.Owner {
+    public class Authorization {
 
-        public OwnerType Owner { get; set; }
-
-        Owner AuthorizationContract.Owner {
-            get {
-                return Owner;
-            }
-            set {
-                Owner = (OwnerType)value;
-            }
-        }
+        public Owner Owner { get; set; }
 
         public string DriverId { get; set; }
 

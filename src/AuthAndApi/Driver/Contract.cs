@@ -8,6 +8,8 @@ namespace AuthAndApi.Driver {
 
         string Name { get; }
 
+        void Associate(Authorization authorization, Owner owner);
+
         /*
         Uri GetAuthorizationUri(out string stateKey, Uri returnUri = null);
 
@@ -15,7 +17,7 @@ namespace AuthAndApi.Driver {
 
         ResourceOwner GetResourceOwner(State state, object data);
 
-        AuthorizationContract Associate(Owner dataSourceOwner, State state, object data);
+
 
         void CreateAuthenticatedRequest(Uri uri, AuthorizationContract authorization, string method = "GET");
 

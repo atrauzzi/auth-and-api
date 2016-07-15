@@ -15,9 +15,7 @@ namespace AuthAndApi.Driver.Oauth2 {
 
         public string Name => Configuration.Name;
 
-        public ResourceOwner GetResourceOwner(State state, object data) {
-            throw new NotImplementedException();
-        }
+        public abstract void Associate(Authorization authorization, Owner owner);
 
         //
         //
@@ -46,7 +44,6 @@ namespace AuthAndApi.Driver.Oauth2 {
             return new RestClient(baseUri).BuildUri(request);
         }
 
-        // Creates the base request.
         protected RestRequest CreateRestRequest() {
             var request = new RestRequest();
             return request;

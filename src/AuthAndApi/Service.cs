@@ -1,10 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using AuthAndApi.Driver;
+﻿using System.Collections.Generic;
 
 
 namespace AuthAndApi {
 
+    // Note: The serivce class is really just a tool to look up drivers by name.
     public class Service {
 
         // This: http://stackoverflow.com/questions/1437902/structuremap-constructor-that-takes-a-list-of-plugins

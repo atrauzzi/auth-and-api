@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Security.Cryptography;
 using System.Threading.Tasks;
 using RestSharp.Portable;
-using RestSharp.Portable.HttpClient;
 
 
 namespace AuthAndApi.Driver.Oauth2 {
@@ -20,13 +18,12 @@ namespace AuthAndApi.Driver.Oauth2 {
         //
         //
 
-        public State Start(Uri returnUri) {
+        public AuthorizationCodeState Start(Uri returnUri) {
 
             string stateKey;
             var authorizationUri = GetAuthorizationUri(out stateKey, returnUri);
 
-            var state = new Oauth2.State(
-                this.Configuration.GrantTypes, 
+            var state = new AuthorizationCodeState(
                 this.Name, 
                 authorizationUri, 
                 stateKey, 
@@ -37,11 +34,9 @@ namespace AuthAndApi.Driver.Oauth2 {
 
         }
 
-        public async Task<Authorization> Complete(Owner owner, State state, string code) {
+        public async Task<Authorization> Complete(AuthorizationCodeState state, string code) {
 
-            var authorization = new Authorization {
-                Owner = owner
-            };
+            var authorization = new Authorization();
 
             var request = CreateRestRequest();
             request.AddQueryParameter("client_id", Configuration.ClientId);
@@ -51,10 +46,16 @@ namespace AuthAndApi.Driver.Oauth2 {
 
             var response = await SendRestRequest(Configuration.BaseAccessTokenUri, request);
 
+            // ToDo: Actually digest the response here.
+
             AuthorizationRepository.UpdateOrCreate(authorization);
 
             return authorization;
 
+        }
+
+        public override void Associate(Authorization authorization, Owner owner) {
+            // ToDo: Do repository things in here.
         }
 
         //
@@ -79,18 +80,6 @@ namespace AuthAndApi.Driver.Oauth2 {
                 request.AddQueryParameter("scope", string.Join(Configuration.ScopeSeparator, Configuration.Scopes));
 
             return BuildUri(Configuration.BaseAuthorizationUri, request);
-
-        }
-
-        protected string CreateStateKey(int length = 32) {
-
-            var tokenData = new byte[length];
-
-            using(RandomNumberGenerator rng = new RNGCryptoServiceProvider()) {
-                rng.GetBytes(tokenData);
-            }
-
-            return Convert.ToBase64String(tokenData);
 
         }
 

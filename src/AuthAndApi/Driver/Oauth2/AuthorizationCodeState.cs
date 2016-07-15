@@ -5,13 +5,13 @@ using BaseState = AuthAndApi.Driver.State;
 
 namespace AuthAndApi.Driver.Oauth2 {
 
-    public class State : BaseState {
+    public class AuthorizationCodeState : BaseState {
 
         public Uri ReturnUri { get; }
 
         public Uri AuthorizationUri { get; }
 
-        public State(string driver, Uri authorizationUri, string key, Uri returnUri = null) {
+        public AuthorizationCodeState(string driver, Uri authorizationUri, string key, Uri returnUri = null) {
             Driver = driver;
             AuthorizationUri = authorizationUri;
             Key = key;

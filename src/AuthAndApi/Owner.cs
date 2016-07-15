@@ -5,7 +5,7 @@ namespace AuthAndApi {
 
     public interface Owner {
 
-        ISet<AuthorizationContract> Authorizations { get; set; }
+        ISet<Authorization> Authorizations { get; set; }
 
     }
 

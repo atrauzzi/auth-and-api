@@ -1,8 +1,10 @@
 ﻿namespace AuthAndApi.Driver {
 
-    public interface CanAuthenticate {
+    public interface CanAuthenticate : Contract {
 
-        Owner FindOrCreateOwner(object data);
+        Owner FindOwner(Authorization authorization);
+
+        Owner CreateOwner(Authorization authorization);
 
     }
 

@@ -1,7 +1,4 @@
-﻿using System;
-
-
-namespace AuthAndApi.Driver {
+﻿namespace AuthAndApi {
 
     public abstract class State {
 

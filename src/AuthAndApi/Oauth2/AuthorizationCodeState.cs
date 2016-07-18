@@ -1,11 +1,9 @@
 ﻿using System;
-using static AuthAndApi.Driver.Oauth2.Driver;
-using BaseState = AuthAndApi.Driver.State;
 
 
-namespace AuthAndApi.Driver.Oauth2 {
+namespace AuthAndApi.Oauth2 {
 
-    public class AuthorizationCodeState : BaseState {
+    public class AuthorizationCodeState : State {
 
         public Uri ReturnUri { get; }
 

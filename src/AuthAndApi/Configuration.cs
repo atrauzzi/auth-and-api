@@ -1,4 +1,4 @@
-﻿namespace AuthAndApi.Driver {
+﻿namespace AuthAndApi {
 
     public abstract class Configuration {
 

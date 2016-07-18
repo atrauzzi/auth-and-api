@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 
 namespace AuthAndApi {
@@ -11,21 +12,21 @@ namespace AuthAndApi {
         // Food for thought: https://codetype.wordpress.com/2012/06/18/using-structuremap-to-collect-and-use-all-instances-of-a-given-type/
         // Reminder: https://twitter.com/jeremydmiller/status/741754579092545536
         // ToDo: Make immutable!
-        public IDictionary<string, Driver.Contract> Drivers { get; protected set; }
+        public IDictionary<string, DriverContract> Drivers { get; protected set; }
 
-        public Service(IDictionary<string, Driver.Contract> drivers) {
+        public Service(IDictionary<string, DriverContract> drivers) {
             Drivers = drivers;
         }
 
         //
         //
 
-        public Driver.Contract GetDriver(string service) {
+        public DriverContract GetDriver(string service) {
 
-            Driver.Contract driver = null;
+            DriverContract driver = null;
 
             if (!Drivers.TryGetValue(service, out driver))
-                throw new UnsupportedServiceException(service);
+                throw new NotSupportedException($"Unable to find service {service}.");
 
             return driver;
 

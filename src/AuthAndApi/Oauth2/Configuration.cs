@@ -1,36 +1,36 @@
 ﻿using System;
 using System.Collections.Generic;
-using BaseConfiguration = AuthAndApi.Driver.Configuration;
 
 
-namespace AuthAndApi.Driver.Oauth2 {
+namespace AuthAndApi.Oauth2 {
 
-    public class Configuration : BaseConfiguration {
+    public class Configuration : AuthAndApi.Configuration {
 
-        public Uri BaseAuthorizationUri { get; set; }
+        public virtual Uri BaseAuthorizationUri { get; set; }
 
-        public Uri BaseAccessTokenUri { get; set; }
+        public virtual Uri BaseAccessTokenUri { get; set; }
 
-        public Uri BaseResourceOwnerUri { get; set; }
+        public virtual Uri BaseApiUri { get; set; }
 
-        public Uri BaseApiUri { get; set; }
+        public virtual Uri BaseRenewalUri { get; set; }
 
-        public Uri BaseRenewalUri { get; set; }
+        public virtual string ClientId { get; set; }
 
-        public string ClientId { get; set; }
+        public virtual string ClientSecret { get; set; }
 
-        public string ClientSecret { get; set; }
+        public virtual string ScopeSeparator { get; set; }
 
-        public string ScopeSeparator { get; set; }
+        public virtual ISet<string> Scopes { get; set; }
 
-        public ISet<string> Scopes { get; set; }
+        protected Configuration() {
+            // Empty paramaterless constructor for subclasses.
+        }
 
         public Configuration(
             string name,
             string clientId,
             string baseAuthorizationUri,
             string baseAccessTokenUri,
-            string baseResourceOwnerUri,
             string baseApiUri = "",
             string baseRenewalUri = "",
             string clientSecret = "",
@@ -42,7 +42,6 @@ namespace AuthAndApi.Driver.Oauth2 {
 
             BaseAuthorizationUri = new Uri(baseAuthorizationUri);
             BaseAccessTokenUri = new Uri(baseAccessTokenUri);
-            BaseResourceOwnerUri = new Uri(baseResourceOwnerUri);
 
             BaseApiUri = string.IsNullOrEmpty(baseApiUri) ? null : new Uri(baseApiUri);
             BaseRenewalUri = string.IsNullOrEmpty(baseRenewalUri) ? null : new Uri(baseRenewalUri);

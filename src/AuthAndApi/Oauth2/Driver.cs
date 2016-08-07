@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Security.Cryptography;
 using System.Threading.Tasks;
 using RestSharp.Portable;
 using RestSharp.Portable.HttpClient;
@@ -49,15 +48,7 @@ namespace AuthAndApi.Oauth2 {
         }
 
         protected string CreateStateKey(int length = 32) {
-
-            var tokenData = new byte[length];
-
-            using(RandomNumberGenerator rng = new RNGCryptoServiceProvider()) {
-                rng.GetBytes(tokenData);
-            }
-
-            return Convert.ToBase64String(tokenData);
-
+            return Convert.ToBase64String(Guid.NewGuid().ToByteArray());
         }
 
     }

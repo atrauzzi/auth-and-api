@@ -3,11 +3,14 @@
 
   "dependencies": {
     "NodaTime": "2.0.0-alpha20160523",
-    "FubarCoder.RestSharp.Portable.HttpClient": "3.3.0"
+    "FubarCoder.RestSharp.Portable.HttpClient": "4.0.0-beta2-001"
   },
 
-	"frameworks": {
-		"net46":  {
-		}
-	}
+  "frameworks": {
+    "netstandard1.6": {
+
+    },
+    "net46": {
+    }
+  }
 }

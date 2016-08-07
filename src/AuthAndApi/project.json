@@ -1,4 +1,5 @@
 {
+  "title": "Auth and API",
   "version": "1.0.0-*",
 
   "dependencies": {
